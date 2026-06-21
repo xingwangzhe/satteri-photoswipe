@@ -22,23 +22,31 @@ describe("createPhotoswipePlugin", () => {
     const { plugin } = createPhotoswipePlugin();
     const img = fakeImg({ width: 800, height: 600, alt: "photo" });
 
-    plugin.element!.visit(img as any, {
-      wrapNode: (_: any, wrapper: any) => {
-        expect(wrapper.tagName).toBe("a");
-        expect(wrapper.properties.href).toBe("photo.jpg");
-        expect(wrapper.properties["data-pswp-width"]).toBe("800");
-        expect(wrapper.properties["data-pswp-height"]).toBe("600");
-        expect(wrapper.properties["aria-label"]).toBe("photo");
-      },
-    } as any);
+    plugin.element!.visit(
+      img as any,
+      {
+        wrapNode: (_: any, wrapper: any) => {
+          expect(wrapper.tagName).toBe("a");
+          expect(wrapper.properties.href).toBe("photo.jpg");
+          expect(wrapper.properties["data-pswp-width"]).toBe("800");
+          expect(wrapper.properties["data-pswp-height"]).toBe("600");
+          expect(wrapper.properties["aria-label"]).toBe("photo");
+        },
+      } as any,
+    );
   });
 
   it("skips images without src", () => {
     const { plugin } = createPhotoswipePlugin();
     let wrapped = false;
-    plugin.element!.visit(fakeImg({ src: "" }) as any, {
-      wrapNode: () => { wrapped = true; },
-    } as any);
+    plugin.element!.visit(
+      fakeImg({ src: "" }) as any,
+      {
+        wrapNode: () => {
+          wrapped = true;
+        },
+      } as any,
+    );
     expect(wrapped).toBe(false);
   });
 
@@ -46,22 +54,28 @@ describe("createPhotoswipePlugin", () => {
     const { plugin } = createPhotoswipePlugin();
     const img = fakeImg({ srcset: "img@2x.jpg 2x" });
 
-    plugin.element!.visit(img as any, {
-      wrapNode: (_: any, wrapper: any) => {
-        expect(wrapper.properties["data-pswp-srcset"]).toBe("img@2x.jpg 2x");
-      },
-    } as any);
+    plugin.element!.visit(
+      img as any,
+      {
+        wrapNode: (_: any, wrapper: any) => {
+          expect(wrapper.properties["data-pswp-srcset"]).toBe("img@2x.jpg 2x");
+        },
+      } as any,
+    );
   });
 
   it("adds data-cropped=true when cropped option set", () => {
     const { plugin } = createPhotoswipePlugin({ cropped: true });
     const img = fakeImg();
 
-    plugin.element!.visit(img as any, {
-      wrapNode: (_: any, wrapper: any) => {
-        expect(wrapper.properties["data-cropped"]).toBe("true");
-      },
-    } as any);
+    plugin.element!.visit(
+      img as any,
+      {
+        wrapNode: (_: any, wrapper: any) => {
+          expect(wrapper.properties["data-cropped"]).toBe("true");
+        },
+      } as any,
+    );
   });
 
   it("exposes default selector for PhotoSwipeLightbox", () => {

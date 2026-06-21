@@ -2,14 +2,32 @@
   "name": "@xingwangzhe/satteri-photoswipe",
   "version": "0.1.0",
   "description": "Satteri HAST plugin that wraps images with PhotoSwipe lightbox containers",
-  "type": "module",
+  "keywords": [
+    "astro",
+    "astro-component",
+    "gallery",
+    "hast",
+    "image",
+    "lightbox",
+    "markdown",
+    "photoswipe",
+    "plugin",
+    "satteri"
+  ],
+  "homepage": "https://github.com/xingwangzhe/satteri-photoswipe#readme",
   "license": "MIT",
   "author": "xingwangzhe",
-  "homepage": "https://github.com/xingwangzhe/satteri-photoswipe#readme",
   "repository": {
     "type": "git",
     "url": "https://github.com/xingwangzhe/satteri-photoswipe"
   },
+  "files": [
+    "dist"
+  ],
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
@@ -17,12 +35,6 @@
       "require": "./dist/index.cjs"
     }
   },
-  "main": "./dist/index.cjs",
-  "module": "./dist/index.mjs",
-  "types": "./dist/index.d.ts",
-  "files": [
-    "dist"
-  ],
   "scripts": {
     "dev": "vite",
     "build": "vite build && tsc --emitDeclarationOnly --declarationDir dist",
@@ -34,9 +46,6 @@
     "lint:fix": "oxlint --fix src test",
     "prepublishOnly": "bun run build"
   },
-  "peerDependencies": {
-    "satteri": ">=0.8.0"
-  },
   "devDependencies": {
     "@types/node": "^24.0.0",
     "oxfmt": "^0.55.0",
@@ -46,16 +55,7 @@
     "vite": "^8.0.0",
     "vitest": "^4.1.0"
   },
-  "keywords": [
-    "astro",
-    "astro-component",
-    "satteri",
-    "photoswipe",
-    "hast",
-    "lightbox",
-    "image",
-    "gallery",
-    "markdown",
-    "plugin"
-  ]
+  "peerDependencies": {
+    "satteri": ">=0.8.0"
+  }
 }

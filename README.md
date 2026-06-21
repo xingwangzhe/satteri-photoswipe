@@ -67,10 +67,10 @@ lightbox.init();
 
 ### `photoswipe(options?)`
 
-| Option | Type | Default | Description |
-|--------|------|---------|-------------|
-| `selector` | `string` | `"a[data-pswp-width]"` | CSS selector for `PhotoSwipeLightbox` gallery |
-| `cropped` | `boolean` | `false` | Add `data-cropped="true"` for cropped thumbnails |
+| Option     | Type      | Default                | Description                                      |
+| ---------- | --------- | ---------------------- | ------------------------------------------------ |
+| `selector` | `string`  | `"a[data-pswp-width]"` | CSS selector for `PhotoSwipeLightbox` gallery    |
+| `cropped`  | `boolean` | `false`                | Add `data-cropped="true"` for cropped thumbnails |
 
 ### `defaultSelector`
 
@@ -82,14 +82,14 @@ Returns `{ plugin, selector }`. For advanced use cases.
 
 ## How it maps attributes
 
-| `<img>` attribute | `<a>` attribute | PhotoSwipe v5 usage |
-|-------------------|-----------------|---------------------|
-| `src` | `href` | Full-size image URL |
-| `width` | `data-pswp-width` | Image width in px (required) |
-| `height` | `data-pswp-height` | Image height in px (required) |
-| `srcset` | `data-pswp-srcset` | Responsive images |
-| `data-pswp-src` | `data-pswp-src` | Passthrough (overrides href) |
-| `alt` | `aria-label` | Accessibility |
+| `<img>` attribute | `<a>` attribute    | PhotoSwipe v5 usage           |
+| ----------------- | ------------------ | ----------------------------- |
+| `src`             | `href`             | Full-size image URL           |
+| `width`           | `data-pswp-width`  | Image width in px (required)  |
+| `height`          | `data-pswp-height` | Image height in px (required) |
+| `srcset`          | `data-pswp-srcset` | Responsive images             |
+| `data-pswp-src`   | `data-pswp-src`    | Passthrough (overrides href)  |
+| `alt`             | `aria-label`       | Accessibility                 |
 
 ## License
 

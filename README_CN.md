@@ -67,10 +67,10 @@ lightbox.init();
 
 ### `photoswipe(options?)`
 
-| 参数 | 类型 | 默认值 | 说明 |
-|------|------|--------|------|
-| `selector` | `string` | `"a[data-pswp-width]"` | `PhotoSwipeLightbox` 的 gallery CSS 选择器 |
-| `cropped` | `boolean` | `false` | 是否添加 `data-cropped="true"`（裁剪缩略图） |
+| 参数       | 类型      | 默认值                 | 说明                                         |
+| ---------- | --------- | ---------------------- | -------------------------------------------- |
+| `selector` | `string`  | `"a[data-pswp-width]"` | `PhotoSwipeLightbox` 的 gallery CSS 选择器   |
+| `cropped`  | `boolean` | `false`                | 是否添加 `data-cropped="true"`（裁剪缩略图） |
 
 ### `defaultSelector`
 
@@ -82,14 +82,14 @@ lightbox.init();
 
 ## 属性映射
 
-| `<img>` 属性 | `<a>` 属性 | PhotoSwipe v5 用途 |
-|-------------|-----------|-------------------|
-| `src` | `href` | 大图 URL |
-| `width` | `data-pswp-width` | 图片宽度（必填） |
-| `height` | `data-pswp-height` | 图片高度（必填） |
-| `srcset` | `data-pswp-srcset` | 响应式图片 |
-| `data-pswp-src` | `data-pswp-src` | 透传（优先级高于 href） |
-| `alt` | `aria-label` | 无障碍 |
+| `<img>` 属性    | `<a>` 属性         | PhotoSwipe v5 用途      |
+| --------------- | ------------------ | ----------------------- |
+| `src`           | `href`             | 大图 URL                |
+| `width`         | `data-pswp-width`  | 图片宽度（必填）        |
+| `height`        | `data-pswp-height` | 图片高度（必填）        |
+| `srcset`        | `data-pswp-srcset` | 响应式图片              |
+| `data-pswp-src` | `data-pswp-src`    | 透传（优先级高于 href） |
+| `alt`           | `aria-label`       | 无障碍                  |
 
 ## 许可
 

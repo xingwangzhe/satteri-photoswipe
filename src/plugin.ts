@@ -1,39 +1,28 @@
 import { defineHastPlugin } from "satteri";
 
 export interface PhotoswipeOptions {
-  /** CSS selector for the gallery. Default: "a[data-pswp]" */
-  gallerySelector?: string;
-  /** Additional img attributes to copy to the wrapper link */
-  extraAttrs?: string[];
+  /**
+   * CSS selector for PhotoSwipe to find gallery links.
+   * Default: "a[data-pswp-width]" — PhotoSwipe v5 requires width/height.
+   * @see https://photoswipe.com/getting-started/
+   */
+  selector?: string;
+  /** Whether to mark thumbnail as cropped (affects opening animation). Default: false */
+  cropped?: boolean;
 }
 
-const defaultAttrs = ["width", "height", "data-width", "data-height", "alt"];
-
-function defaultRender(
-  src: string,
-  imgProps: Record<string, unknown>,
-): Record<string, string> {
-  const linkProps: Record<string, string> = {
-    href: src,
-    "data-pswp": "true",
-  };
-  for (const attr of defaultAttrs) {
-    const v = imgProps[attr];
-    if (v != null) {
-      if (attr === "alt") {
-        linkProps["aria-label"] = String(v);
-      } else if (attr === "width" || attr === "data-width") {
-        linkProps["data-pswp-width"] = String(v);
-      } else if (attr === "height" || attr === "data-height") {
-        linkProps["data-pswp-height"] = String(v);
-      }
-    }
-  }
-  return linkProps;
-}
+/** Standard PhotoSwipe v5 link attributes */
+const PSWP_ATTRS = {
+  WIDTH: "data-pswp-width",
+  HEIGHT: "data-pswp-height",
+  SRC: "data-pswp-src",
+  SRCSET: "data-pswp-srcset",
+  CROPPED: "data-cropped",
+} as const;
 
 export function createPhotoswipePlugin(options?: PhotoswipeOptions) {
-  const extraAttrs = options?.extraAttrs ?? [];
+  const selector = options?.selector ?? `a[${PSWP_ATTRS.WIDTH}]`;
+  const cropped = options?.cropped ?? false;
 
   const plugin = defineHastPlugin({
     name: "satteri-photoswipe",
@@ -44,12 +33,30 @@ export function createPhotoswipePlugin(options?: PhotoswipeOptions) {
         const src = String(props.src ?? "");
         if (!src) return;
 
-        const linkProps = defaultRender(src, props);
+        const linkProps: Record<string, string> = { href: src };
 
-        // Copy extra attributes
-        for (const attr of extraAttrs) {
-          const v = props[attr];
-          if (v != null) linkProps[attr] = String(v);
+        // width/height → data-pswp-width/height (required by PhotoSwipe v5)
+        const w = props.width ?? props[PSWP_ATTRS.WIDTH];
+        const h = props.height ?? props[PSWP_ATTRS.HEIGHT];
+        if (w != null) linkProps[PSWP_ATTRS.WIDTH] = String(w);
+        if (h != null) linkProps[PSWP_ATTRS.HEIGHT] = String(h);
+
+        // srcset → data-pswp-srcset
+        const srcset = props.srcset ?? props[PSWP_ATTRS.SRCSET];
+        if (srcset != null) linkProps[PSWP_ATTRS.SRCSET] = String(srcset);
+
+        // data-pswp-src (higher priority than href)
+        if (props[PSWP_ATTRS.SRC] != null) {
+          linkProps[PSWP_ATTRS.SRC] = String(props[PSWP_ATTRS.SRC]);
+        }
+
+        // alt → aria-label (accessibility)
+        if (props.alt != null) {
+          linkProps["aria-label"] = String(props.alt);
+        }
+
+        if (cropped) {
+          linkProps[PSWP_ATTRS.CROPPED] = "true";
         }
 
         ctx.wrapNode(node, {
@@ -62,7 +69,7 @@ export function createPhotoswipePlugin(options?: PhotoswipeOptions) {
     },
   });
 
-  return { plugin };
+  return { plugin, selector };
 }
 
 /** Factory function. Usage: `photoswipe()` — aligns with `katex()` style */
@@ -73,3 +80,4 @@ export function photoswipe(options?: PhotoswipeOptions) {
 const defaultInstance = createPhotoswipePlugin();
 
 export const photoswipePlugin = defaultInstance.plugin;
+export const defaultSelector = defaultInstance.selector;

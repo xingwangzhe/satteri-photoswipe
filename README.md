@@ -8,7 +8,8 @@
 
 - **PhotoSwipe v5 native** — uses `data-pswp-width`, `data-pswp-height`, `data-pswp-srcset`, `data-cropped`
 - **Auto attribute mapping** — `width`/`height` → `data-pswp-*`, `alt` → `aria-label`, `srcset` → `data-pswp-srcset`
-- **Exposes selector** — `defaultSelector` ready for `PhotoSwipeLightbox` config
+- **Class-based selector** — `a.pswp-gallery-item` works with Markdown images (no dimensions needed at build time)
+- **Exposes `defaultSelector`** — ready for `PhotoSwipeLightbox` config
 - **Zero-config** — `photoswipe()` just works
 
 ## Install
@@ -56,7 +57,7 @@ import PhotoSwipe from "photoswipe";
 import { defaultSelector } from "@xingwangzhe/satteri-photoswipe";
 
 const lightbox = new PhotoSwipeLightbox({
-  gallery: defaultSelector, // "a[data-pswp-width]"
+  gallery: defaultSelector, // "a.pswp-gallery-item"
   children: "img",
   pswpModule: PhotoSwipe,
 });
@@ -67,14 +68,15 @@ lightbox.init();
 
 ### `photoswipe(options?)`
 
-| Option     | Type      | Default                | Description                                      |
-| ---------- | --------- | ---------------------- | ------------------------------------------------ |
-| `selector` | `string`  | `"a[data-pswp-width]"` | CSS selector for `PhotoSwipeLightbox` gallery    |
-| `cropped`  | `boolean` | `false`                | Add `data-cropped="true"` for cropped thumbnails |
+| Option      | Type      | Default                | Description                                       |
+| ----------- | --------- | ---------------------- | ------------------------------------------------- |
+| `className` | `string`  | `"pswp-gallery-item"`  | CSS class added to each wrapped `<a>`             |
+| `selector`  | `string`  | `"a.pswp-gallery-item"`| Gallery selector for `PhotoSwipeLightbox`         |
+| `cropped`   | `boolean` | `false`                | Add `data-cropped="true"` for cropped thumbnails  |
 
 ### `defaultSelector`
 
-`"a[data-pswp-width]"` — pass directly to `PhotoSwipeLightbox({ gallery: defaultSelector })`.
+`"a.pswp-gallery-item"` — pass directly to `PhotoSwipeLightbox({ gallery: defaultSelector })`.
 
 ### `createPhotoswipePlugin(options?)`
 

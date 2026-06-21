@@ -67,14 +67,15 @@ lightbox.init();
 
 ### `photoswipe(options?)`
 
-| 参数       | 类型      | 默认值                 | 说明                                         |
-| ---------- | --------- | ---------------------- | -------------------------------------------- |
-| `selector` | `string`  | `"a[data-pswp-width]"` | `PhotoSwipeLightbox` 的 gallery CSS 选择器   |
-| `cropped`  | `boolean` | `false`                | 是否添加 `data-cropped="true"`（裁剪缩略图） |
+| 参数         | 类型      | 默认值                  | 说明                                          |
+| ------------ | --------- | ----------------------- | --------------------------------------------- |
+| `className`  | `string`  | `"pswp-gallery-item"`   | 添加到每个 `<a>` 的 CSS class                 |
+| `selector`   | `string`  | `"a.pswp-gallery-item"` | `PhotoSwipeLightbox` 的 gallery CSS 选择器    |
+| `cropped`    | `boolean` | `false`                 | 是否添加 `data-cropped="true"`（裁剪缩略图）  |
 
 ### `defaultSelector`
 
-`"a[data-pswp-width]"` — 直接传入 `PhotoSwipeLightbox({ gallery: defaultSelector })`。
+`"a.pswp-gallery-item"` — 直接传入 `PhotoSwipeLightbox({ gallery: defaultSelector })`。
 
 ### `createPhotoswipePlugin(options?)`
 

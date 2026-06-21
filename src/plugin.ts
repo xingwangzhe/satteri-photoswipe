@@ -1,11 +1,9 @@
 import { defineHastPlugin } from "satteri";
 
 export interface PhotoswipeOptions {
-  /**
-   * CSS selector for PhotoSwipe to find gallery links.
-   * Default: "a[data-pswp-width]" — PhotoSwipe v5 requires width/height.
-   * @see https://photoswipe.com/getting-started/
-   */
+  /** CSS class added to wrapped links. Default: "pswp-gallery-item" */
+  className?: string;
+  /** Override the default selector for PhotoSwipeLightbox. Default: "a.pswp-gallery-item" */
   selector?: string;
   /** Whether to mark thumbnail as cropped (affects opening animation). Default: false */
   cropped?: boolean;
@@ -20,8 +18,11 @@ const PSWP_ATTRS = {
   CROPPED: "data-cropped",
 } as const;
 
+const DEFAULT_CLASS = "pswp-gallery-item";
+
 export function createPhotoswipePlugin(options?: PhotoswipeOptions) {
-  const selector = options?.selector ?? `a[${PSWP_ATTRS.WIDTH}]`;
+  const className = options?.className ?? DEFAULT_CLASS;
+  const selector = options?.selector ?? `a.${className}`;
   const cropped = options?.cropped ?? false;
 
   const plugin = defineHastPlugin({
@@ -33,9 +34,12 @@ export function createPhotoswipePlugin(options?: PhotoswipeOptions) {
         const src = String(props.src ?? "");
         if (!src) return;
 
-        const linkProps: Record<string, string> = { href: src };
+        const linkProps: Record<string, string> = {
+          href: src,
+          class: className,
+        };
 
-        // width/height → data-pswp-width/height (required by PhotoSwipe v5)
+        // width/height → data-pswp-width/height (PhotoSwipe v5)
         const w = props.width ?? props[PSWP_ATTRS.WIDTH];
         const h = props.height ?? props[PSWP_ATTRS.HEIGHT];
         if (w != null) linkProps[PSWP_ATTRS.WIDTH] = String(w);

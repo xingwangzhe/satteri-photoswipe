@@ -79,7 +79,7 @@ describe("createPhotoswipePlugin", () => {
   });
 
   it("exposes default selector for PhotoSwipeLightbox", () => {
-    expect(defaultSelector).toBe("a[data-pswp-width]");
+    expect(defaultSelector).toBe("a.pswp-gallery-item");
   });
 
   it("custom selector", () => {

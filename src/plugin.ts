@@ -19,6 +19,7 @@ const PSWP_ATTRS = {
 } as const;
 
 const DEFAULT_CLASS = "pswp-gallery-item";
+const DEFAULT_SELECTOR = `a.${DEFAULT_CLASS}`;
 
 export function createPhotoswipePlugin(options?: PhotoswipeOptions) {
   const className = options?.className ?? DEFAULT_CLASS;
@@ -84,4 +85,5 @@ export function photoswipe(options?: PhotoswipeOptions) {
 const defaultInstance = createPhotoswipePlugin();
 
 export const photoswipePlugin = defaultInstance.plugin;
-export const defaultSelector = defaultInstance.selector;
+/** Default CSS selector string for PhotoSwipeLightbox children: `"a.pswp-gallery-item"` */
+export const defaultSelector = DEFAULT_SELECTOR;

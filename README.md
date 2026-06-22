@@ -9,7 +9,7 @@
 - **PhotoSwipe v5 native** — uses `data-pswp-width`, `data-pswp-height`, `data-pswp-srcset`, `data-cropped`
 - **Auto attribute mapping** — `width`/`height` → `data-pswp-*`, `alt` → `aria-label`, `srcset` → `data-pswp-srcset`
 - **Class-based selector** — `a.pswp-gallery-item` works with Markdown images (no dimensions needed at build time)
-- **Exposes `defaultSelector`** — ready for `PhotoSwipeLightbox` config
+- **Tree-shakeable `defaultSelector`** — a plain string constant, importing it won't pull HAST plugin code into your client bundle
 - **Zero-config** — `photoswipe()` just works
 
 ## Install
@@ -22,9 +22,11 @@ Requires `satteri >= 0.8.0`. [PhotoSwipe v5](https://photoswipe.com/) must be lo
 
 ## Usage
 
+### Build-time: HAST plugin
+
 ```js
 // astro.config.mjs
-import { photoswipe, defaultSelector } from "@xingwangzhe/satteri-photoswipe";
+import { photoswipe } from "@xingwangzhe/satteri-photoswipe";
 
 export default defineConfig({
   markdown: {
@@ -35,7 +37,7 @@ export default defineConfig({
 });
 ```
 
-Markdown:
+Markdown image:
 
 ```markdown
 ![A photo](photo.jpg)
@@ -44,12 +46,15 @@ Markdown:
 Output:
 
 ```html
-<a href="photo.jpg" data-pswp-width="800" data-pswp-height="600" aria-label="A photo">
+<a href="photo.jpg" class="pswp-gallery-item"
+   data-pswp-width="800" data-pswp-height="600" aria-label="A photo">
   <img src="photo.jpg" alt="A photo" />
 </a>
 ```
 
-### Client-side setup
+### Client-side: PhotoSwipeLightbox
+
+`defaultSelector` is a **pure string constant** (`"a.pswp-gallery-item"`). Importing it only brings ~1 KB of JS into your client bundle — no HAST/satteri dependency.
 
 ```js
 import PhotoSwipeLightbox from "photoswipe/lightbox";
@@ -57,12 +62,14 @@ import PhotoSwipe from "photoswipe";
 import { defaultSelector } from "@xingwangzhe/satteri-photoswipe";
 
 const lightbox = new PhotoSwipeLightbox({
-  gallery: defaultSelector, // "a.pswp-gallery-item"
-  children: "img",
+  gallery: "[data-pagefind-body]",   // your article container
+  children: defaultSelector,         // "a.pswp-gallery-item"
   pswpModule: PhotoSwipe,
 });
 lightbox.init();
 ```
+
+> **Note:** `defaultSelector` is safe to import in browser code. It's a plain string constant that tree-shakes cleanly — unlike the `photoswipe()` and `createPhotoswipePlugin()` functions, which are HAST plugin factories intended only for build-time use.
 
 ## API
 
@@ -76,11 +83,13 @@ lightbox.init();
 
 ### `defaultSelector`
 
-`"a.pswp-gallery-item"` — pass directly to `PhotoSwipeLightbox({ gallery: defaultSelector })`.
+A plain string constant: `"a.pswp-gallery-item"`. Pass directly to `PhotoSwipeLightbox({ children: defaultSelector })`.
+
+Tree-shakeable — imports only the string itself, no HAST plugin code.
 
 ### `createPhotoswipePlugin(options?)`
 
-Returns `{ plugin, selector }`. For advanced use cases.
+Build-time only. Returns `{ plugin, selector }`. For advanced use cases.
 
 ## How it maps attributes
 

@@ -9,6 +9,7 @@
 - **PhotoSwipe v5 原生** — 使用 `data-pswp-width`、`data-pswp-height`、`data-pswp-srcset`、`data-cropped`
 - **自动属性映射** — `width`/`height` → `data-pswp-*`，`alt` → `aria-label`，`srcset` → `data-pswp-srcset`
 - **导出选择器** — `defaultSelector` 可直接传入 `PhotoSwipeLightbox` 配置
+- **Tree-shakeable** — `defaultSelector` 是纯字符串常量，客户端导入不会引入 HAST 插件代码
 - **零配置** — `photoswipe()` 开箱即用
 
 ## 安装
@@ -21,9 +22,11 @@ bun add @xingwangzhe/satteri-photoswipe
 
 ## 使用
 
+### 构建时：HAST 插件
+
 ```js
 // astro.config.mjs
-import { photoswipe, defaultSelector } from "@xingwangzhe/satteri-photoswipe";
+import { photoswipe } from "@xingwangzhe/satteri-photoswipe";
 
 export default defineConfig({
   markdown: {
@@ -34,7 +37,7 @@ export default defineConfig({
 });
 ```
 
-Markdown：
+Markdown 图片：
 
 ```markdown
 ![照片](photo.jpg)
@@ -43,12 +46,15 @@ Markdown：
 输出：
 
 ```html
-<a href="photo.jpg" data-pswp-width="800" data-pswp-height="600" aria-label="照片">
+<a href="photo.jpg" class="pswp-gallery-item"
+   data-pswp-width="800" data-pswp-height="600" aria-label="照片">
   <img src="photo.jpg" alt="照片" />
 </a>
 ```
 
-### 浏览器端初始化
+### 浏览器端：PhotoSwipeLightbox
+
+`defaultSelector` 是 **纯字符串常量**（`"a.pswp-gallery-item"`）。导入它只会带来 ~1 KB 的 JS，**不会**将 HAST/satteri 打包到客户端。
 
 ```js
 import PhotoSwipeLightbox from "photoswipe/lightbox";
@@ -56,12 +62,14 @@ import PhotoSwipe from "photoswipe";
 import { defaultSelector } from "@xingwangzhe/satteri-photoswipe";
 
 const lightbox = new PhotoSwipeLightbox({
-  gallery: defaultSelector, // "a[data-pswp-width]"
-  children: "img",
+  gallery: "[data-pagefind-body]",   // 文章容器
+  children: defaultSelector,         // "a.pswp-gallery-item"
   pswpModule: PhotoSwipe,
 });
 lightbox.init();
 ```
+
+> **注意：** `defaultSelector` 可以在浏览器代码中安全导入。它是纯字符串常量，可以被 tree-shaking 正确剔除多余代码。而 `photoswipe()` 和 `createPhotoswipePlugin()` 是 HAST 插件工厂，仅供构建时使用。
 
 ## API
 
@@ -75,11 +83,13 @@ lightbox.init();
 
 ### `defaultSelector`
 
-`"a.pswp-gallery-item"` — 直接传入 `PhotoSwipeLightbox({ gallery: defaultSelector })`。
+纯字符串常量：`"a.pswp-gallery-item"`。直接传入 `PhotoSwipeLightbox({ children: defaultSelector })`。
+
+Tree-shakeable — 只导入字符串本身，不含任何 HAST 插件代码。
 
 ### `createPhotoswipePlugin(options?)`
 
-返回 `{ plugin, selector }`，高级用法。
+仅构建时使用。返回 `{ plugin, selector }`，高级用法。
 
 ## 属性映射
 

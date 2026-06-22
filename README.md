@@ -46,8 +46,13 @@ Markdown image:
 Output:
 
 ```html
-<a href="photo.jpg" class="pswp-gallery-item"
-   data-pswp-width="800" data-pswp-height="600" aria-label="A photo">
+<a
+  href="photo.jpg"
+  class="pswp-gallery-item"
+  data-pswp-width="800"
+  data-pswp-height="600"
+  aria-label="A photo"
+>
   <img src="photo.jpg" alt="A photo" />
 </a>
 ```
@@ -62,8 +67,8 @@ import PhotoSwipe from "photoswipe";
 import { defaultSelector } from "@xingwangzhe/satteri-photoswipe";
 
 const lightbox = new PhotoSwipeLightbox({
-  gallery: "[data-pagefind-body]",   // your article container
-  children: defaultSelector,         // "a.pswp-gallery-item"
+  gallery: "[data-pagefind-body]", // your article container
+  children: defaultSelector, // "a.pswp-gallery-item"
   pswpModule: PhotoSwipe,
 });
 lightbox.init();
@@ -75,11 +80,11 @@ lightbox.init();
 
 ### `photoswipe(options?)`
 
-| Option      | Type      | Default                | Description                                       |
-| ----------- | --------- | ---------------------- | ------------------------------------------------- |
-| `className` | `string`  | `"pswp-gallery-item"`  | CSS class added to each wrapped `<a>`             |
-| `selector`  | `string`  | `"a.pswp-gallery-item"`| Gallery selector for `PhotoSwipeLightbox`         |
-| `cropped`   | `boolean` | `false`                | Add `data-cropped="true"` for cropped thumbnails  |
+| Option      | Type      | Default                 | Description                                      |
+| ----------- | --------- | ----------------------- | ------------------------------------------------ |
+| `className` | `string`  | `"pswp-gallery-item"`   | CSS class added to each wrapped `<a>`            |
+| `selector`  | `string`  | `"a.pswp-gallery-item"` | Gallery selector for `PhotoSwipeLightbox`        |
+| `cropped`   | `boolean` | `false`                 | Add `data-cropped="true"` for cropped thumbnails |
 
 ### `defaultSelector`
 

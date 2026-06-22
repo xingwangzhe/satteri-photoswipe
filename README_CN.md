@@ -46,8 +46,13 @@ Markdown 图片：
 输出：
 
 ```html
-<a href="photo.jpg" class="pswp-gallery-item"
-   data-pswp-width="800" data-pswp-height="600" aria-label="照片">
+<a
+  href="photo.jpg"
+  class="pswp-gallery-item"
+  data-pswp-width="800"
+  data-pswp-height="600"
+  aria-label="照片"
+>
   <img src="photo.jpg" alt="照片" />
 </a>
 ```
@@ -62,8 +67,8 @@ import PhotoSwipe from "photoswipe";
 import { defaultSelector } from "@xingwangzhe/satteri-photoswipe";
 
 const lightbox = new PhotoSwipeLightbox({
-  gallery: "[data-pagefind-body]",   // 文章容器
-  children: defaultSelector,         // "a.pswp-gallery-item"
+  gallery: "[data-pagefind-body]", // 文章容器
+  children: defaultSelector, // "a.pswp-gallery-item"
   pswpModule: PhotoSwipe,
 });
 lightbox.init();
@@ -75,11 +80,11 @@ lightbox.init();
 
 ### `photoswipe(options?)`
 
-| 参数         | 类型      | 默认值                  | 说明                                          |
-| ------------ | --------- | ----------------------- | --------------------------------------------- |
-| `className`  | `string`  | `"pswp-gallery-item"`   | 添加到每个 `<a>` 的 CSS class                 |
-| `selector`   | `string`  | `"a.pswp-gallery-item"` | `PhotoSwipeLightbox` 的 gallery CSS 选择器    |
-| `cropped`    | `boolean` | `false`                 | 是否添加 `data-cropped="true"`（裁剪缩略图）  |
+| 参数        | 类型      | 默认值                  | 说明                                         |
+| ----------- | --------- | ----------------------- | -------------------------------------------- |
+| `className` | `string`  | `"pswp-gallery-item"`   | 添加到每个 `<a>` 的 CSS class                |
+| `selector`  | `string`  | `"a.pswp-gallery-item"` | `PhotoSwipeLightbox` 的 gallery CSS 选择器   |
+| `cropped`   | `boolean` | `false`                 | 是否添加 `data-cropped="true"`（裁剪缩略图） |
 
 ### `defaultSelector`
 

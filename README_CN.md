@@ -15,7 +15,7 @@
 ## 安装
 
 ```bash
-bun add @xingwangzhe/satteri-photoswipe
+bun add -D @xingwangzhe/satteri-photoswipe
 ```
 
 需要 `satteri >= 0.8.0`。[PhotoSwipe v5](https://photoswipe.com/) 需在浏览器端单独加载。

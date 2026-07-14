@@ -15,7 +15,7 @@
 ## Install
 
 ```bash
-bun add @xingwangzhe/satteri-photoswipe
+bun add -D @xingwangzhe/satteri-photoswipe
 ```
 
 Requires `satteri >= 0.8.0`. [PhotoSwipe v5](https://photoswipe.com/) must be loaded client-side.

@@ -3,14 +3,14 @@
   "version": "0.2.0",
   "description": "Satteri HAST plugin that wraps images with PhotoSwipe lightbox containers",
   "keywords": [
-    "astro-integration",
     "astro-component",
-    "image",
-    "media",
+    "astro-integration",
     "gallery",
     "hast",
+    "image",
     "lightbox",
     "markdown",
+    "media",
     "photoswipe",
     "plugin",
     "satteri"

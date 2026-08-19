@@ -1,6 +1,6 @@
 {
   "name": "@xingwangzhe/satteri-photoswipe",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "description": "Satteri HAST plugin that wraps images with PhotoSwipe lightbox containers",
   "keywords": [
     "astro-component",
@@ -49,12 +49,12 @@
   },
   "devDependencies": {
     "@types/node": "^26.2.0",
-    "oxfmt": "^0.63.0",
-    "oxlint": "^1.78.0",
-    "satteri": "^0.9.5",
+    "oxfmt": "^0.64.0",
+    "oxlint": "^1.79.0",
+    "satteri": "^0.10.4",
     "typescript": "^7.0.2",
     "vite": "^8.2.1",
-    "vitest": "^4.1.10"
+    "vitest": "^4.1.11"
   },
   "peerDependencies": {
     "satteri": ">=0.8.0"
